@@ -18,8 +18,8 @@ app.use(jwt())
 app.use('/users', userRoutes)
 
 
-const CONNECTION_URL = process.env.CONNECTION_URL
-const PORT = process.env.PORT
+const CONNECTION_URL = process.env.CONNECTION_URL!
+const PORT = process.env.PORT!
 
 mongoose.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`)))

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import User from '../models/users.js'
+import User, { IUser } from '../models/users.js'
 
-async function authenticate({ username, password }) {
+async function authenticate({ username, password }: IUser) {
     const user = await User.findOne({ username });
     if (user && bcrypt.compareSync(password, user.password)) {
-        const token = jwt.sign({ sub: user.id }, process.env.SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ sub: user.id }, process.env.SECRET!, { expiresIn: '1d' });
         return {
             ...user.toJSON(),
             token
@@ -17,11 +17,12 @@ async function getAll() {
     return await User.find();
 }
 
-async function getById(id) {
+async function getById(id: String) {
+    console.log(id)
     return await User.findById(id);
 }
 
-async function create(userParam) {
+async function create(userParam: IUser) {
     // validate
     //TODO: two different throws
     if (await User.findOne({$or: [{username: userParam.username}, {email: userParam.email}] })) {
@@ -39,7 +40,7 @@ async function create(userParam) {
     await user.save();
 }
 
-async function update(id, userParam) {
+async function update(id: String, userParam: IUser) {
     const user = await User.findById(id);
 
     // validate
@@ -59,7 +60,7 @@ async function update(id, userParam) {
     await user.save();
 }
 
-async function remove(id) {
+async function remove(id: String) {
     await User.findByIdAndRemove(id);
 }
 

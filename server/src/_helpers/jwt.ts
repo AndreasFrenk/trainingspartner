@@ -6,7 +6,7 @@ import {getById} from '../services/users.js'
 
 
 export function jwt() {
-    const secret = process.env.SECRET;
+    const secret: expressJwt.secretType = process.env.SECRET!;
     return expressJwt({ secret, algorithms: ['HS256'], isRevoked }).unless({
         path: [
             // public routes that don't require authentication
@@ -15,8 +15,7 @@ export function jwt() {
         ]
     });
 }
-
-async function isRevoked(req, payload, done) {
+async function isRevoked(req: any, payload: any, done: any){
     const user = await getById(payload.sub);
 
     // revoke token if user no longer exists
