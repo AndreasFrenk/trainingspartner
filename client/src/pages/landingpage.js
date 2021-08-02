@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { useSelector } from "react-redux";
 
-import "../styles/landingpage.scss";
+import "../styles/pages/landingpage.scss";
 
 const LandingPage = ()=>{
   const users = useSelector((state) => state.users)
