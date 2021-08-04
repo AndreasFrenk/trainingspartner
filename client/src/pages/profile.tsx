@@ -7,16 +7,18 @@ import Popup from '../components/popup';
 
 interface profileSettings {
   showPopup: boolean;
+  displayType: string;
 }
 class Profile extends React.Component<{ }, profileSettings> {
   constructor(props: profileSettings) {
     super(props);
-    this.state = { showPopup: false as boolean };
-    this.imageChange = this.imageChange.bind(this);
+    this.state = { showPopup: false as boolean, displayType: '' };
+    this.showPopup = this.showPopup.bind(this);
   }
-  imageChange() {
+  showPopup(displayType: string) {
     this.setState({
       showPopup: !this.state.showPopup,
+      displayType: displayType
     });
   }
 
@@ -29,13 +31,16 @@ class Profile extends React.Component<{ }, profileSettings> {
           style={{ backgroundImage: `url(${backgroundImage})` }}
         ></div>
         <div className="content">
-          <Popup showPopup={this.state.showPopup} imageChange={this.imageChange}></Popup>
+          <Popup showPopup={this.state.showPopup} displayPopup={this.showPopup} displayType={this.state.displayType}></Popup>
           <img
-            className="rounded profile__image -mt-32"
+            className="rounded profile__image -mt-32 cursor-pointer"
             src={profileImage}
-            onClick={this.imageChange}
+            onClick={() => {this.showPopup('image')}}
           ></img>
-          <div className="flex mt-4 justify-between">
+          <div className="float-right cursor-pointer"
+            onClick={() => {this.showPopup('profile')}}
+           >Edit</div>
+          <div className="flex mt-4 justify-between w-full">
             <div>
               <div className="font-bold text-xl">Andreas Frenk</div>
               <div className="mt-2">Hobbyathlet</div>
