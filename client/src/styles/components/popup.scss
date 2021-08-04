@@ -1,12 +1,11 @@
 .popup {
+
   &__content {
     > div:first-child {
       margin-top: 0;
     }
     > div {
       margin-top: 20px;
-      > input {
-      }
     }
   }
   .aside {
