@@ -1,11 +1,9 @@
 import { Action } from "redux";
 
 let user = localStorage.getItem('user')
-console.log(user)
 const initialState = user ? { loggedIn: true, user } : {};
 
 export const authenticationReducer = (state = initialState, action: any) => {
-    console.log(localStorage.getItem('user'))
     switch (action.type) {
         case 'LOGIN_REQUEST':
             return {
@@ -13,14 +11,20 @@ export const authenticationReducer = (state = initialState, action: any) => {
                 user: action.user
             };
         case 'LOGIN_SUCCESS':
-            console.log(action)
             return {
                 loggedIn: true,
                 user: action.user
             };
         case 'LOGIN_FAILURE':
-            return {};
+            return {
+                failure: true,
+                error: action.error
+            };
         case 'LOGOUT':
+            return {
+                loggedIn: false
+            };
+        case 'LOGIN_RESET':
             return {};
         default:
             return state

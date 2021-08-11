@@ -18,7 +18,6 @@ async function getAll() {
 }
 
 async function getById(id: String) {
-    console.log(id)
     return await User.findById(id);
 }
 
@@ -60,7 +59,7 @@ async function update(id: String, userParam: IUser) {
     await user.save();
 }
 
-async function remove(id: String) {
+async function remove(id: String) {  
     await User.findByIdAndRemove(id);
 }
 

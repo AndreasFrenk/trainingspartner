@@ -7,6 +7,7 @@ interface Props {
 }
 
 const LoginModal: React.FC<Props> = ({ setShowModal }) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -14,6 +15,7 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
     };
   }, []);
 
+  const authentication = useSelector((state: any) => state.authentication);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,9 +24,10 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
       closeModal();
     }
   };
-
+  
   const closeModal = () => {
     setShowModal(false);
+    dispatch({type: 'LOGIN_RESET'})
   };
   const modalRef = React.useRef<HTMLInputElement>(null);
 
@@ -35,16 +38,6 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
       closeModal();
     }
   };
-
-  useEffect(() => {
-    dispatch(logout());
-}, []);
-
-  const dispatch = useDispatch();
-  const authenticated = useSelector((state: any) => state.authentication);
-  console.log(authenticated)
-  console.log(localStorage)
-
 
   const  onSubmit  = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -93,6 +86,9 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
                 placeholder="Password"
               />
             </div>
+            {
+                            authentication.failure ? <p className="text-red-600 py-2 px-3">{authentication.error}</p> : ""
+                        }
             <div className="mt-5 flex justify-center space-x-3">
               <input
                 type="submit"

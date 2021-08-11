@@ -1,8 +1,7 @@
 
 import { useHistory } from 'react-router-dom'
 import { Action } from 'redux'
-import * as api from '../api'
-import { userService } from '../services/userService'
+import { userService, IUser } from '../services/userService'
 
 
 //action creators
@@ -18,7 +17,7 @@ export const getUsers = () => async (dispatch: any) => {
     )
 }
 
-export const register = (userParam: api.IUser) => async (dispatch: any) => {
+export const register = (userParam: IUser) => async (dispatch: any) => {
     dispatch({type:'REGISTER_REQUEST'})
     userService.register(userParam).then(
         user => {
@@ -26,23 +25,22 @@ export const register = (userParam: api.IUser) => async (dispatch: any) => {
             //Push history
         },
         error => {
-            dispatch({type: 'REGISTER_FAILURE'}, error)
+            dispatch({type: 'REGISTER_FAILURE', error: error.response.data.message})
             //dispatch Alert Function
         }
     )
 }
 
 
-export const login = ({username, password}: api.IUser)  => (dispatch: any) => {
+export const login = ({username, password}: IUser)  => (dispatch: any) => {
         dispatch({type:'LOGIN_REQUEST', username })
         userService.login({username, password})
             .then(
                 user => {
                     dispatch({type: 'LOGIN_SUCCESS', user})
-                    // TODO: Push to /home
                 },
                 error => {
-                    dispatch({type: 'LOGIN_FAILURE'}, error)
+                    dispatch({type: 'LOGIN_FAILURE',  error: error.response.data.message})
                     //dispatch Alert Function
                 }
             )
@@ -50,14 +48,13 @@ export const login = ({username, password}: api.IUser)  => (dispatch: any) => {
 
 export const logout = () => (dispatch: any) => {
     userService.logout()
-    dispatch({type:'LOG_OUT'})
+    dispatch({type:'LOGOUT'})
 }
 
 export const getCurrentUser = () => async (dispatch: any) => {
     userService.getCurrent()
     .then(
         user => {
-            console.log(user)
             dispatch({type: 'LOGIN_SUCCESS', user})
             //Push history
         },
@@ -66,4 +63,12 @@ export const getCurrentUser = () => async (dispatch: any) => {
             //dispatch Alert Function
         }
     )
+}
+
+export const userActions = {
+    getUsers,
+    getCurrentUser,
+    logout,
+    login,
+    register
 }
