@@ -5,7 +5,7 @@ console.log(user)
 const initialState = user ? { loggedIn: true, user } : {};
 
 export const authenticationReducer = (state = initialState, action: any) => {
-    console.log(localStorage.getItem('user'))
+    // console.log(localStorage.getItem('user'))
     switch (action.type) {
         case 'LOGIN_REQUEST':
             return {

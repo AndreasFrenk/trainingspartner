@@ -37,13 +37,11 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
   };
 
   useEffect(() => {
-    dispatch(logout());
+    // dispatch(logout());
 }, []);
 
   const dispatch = useDispatch();
   const authenticated = useSelector((state: any) => state.authentication);
-  console.log(authenticated)
-  console.log(localStorage)
 
 
   const  onSubmit  = (e: React.FormEvent<HTMLFormElement>) => {

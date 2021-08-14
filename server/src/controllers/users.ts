@@ -1,5 +1,7 @@
 import * as userService from '../services/users.js'
 import {Request, Response, NextFunction} from 'express'
+import path from 'path'
+import fs from 'fs'
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     userService.authenticate(req.body)
@@ -37,6 +39,23 @@ const update = (req: Request, res: Response, next: NextFunction) => {
         .catch(err => next(err));
 }
 
+const updateImage = (req: Request, res: Response, next: NextFunction) => {
+        const dir = path.join(__dirname);
+        const img = {
+        data: fs.readFileSync(path.join(__dirname + '/../../public/' + req?.file?.filename)),
+        contentType: req?.file?.mimetype
+    }
+    const imgURL = 'http://localhost:5000/' +  req?.file?.filename;
+    const newPath = path.join(__dirname + '/' + req?.file?.filename);
+    fs.rename(path.join(__dirname + '/' + req?.file?.filename), newPath, (err) => {
+      console.log(err);
+    userService.updateImage( req.params.id, imgURL)
+        .then(user => user ? res.json(user) : res.sendStatus(404))
+        // .then(() => res.json({}))
+        .catch(err => next(err));
+})
+}
+
 const remove = (req: Request, res: Response, next: NextFunction) => {
     userService.remove(req.params.id)
         .then(() => res.json({}))
@@ -50,5 +69,6 @@ export {
     register,
     update,
     remove,
-    getCurrent
+    getCurrent,
+    updateImage
 }

@@ -13,6 +13,7 @@ async function authenticate({ username, password }: IUser) {
     }
 }
 
+
 async function getAll() {
     return await User.find();
 }
@@ -60,6 +61,27 @@ async function update(id: String, userParam: IUser) {
     await user.save();
 }
 
+async function updateImage(id: String, imgURL: String ) {
+    const user = await User.findById(id);
+
+    // validate
+    if (!user) throw 'User not found';
+
+    let userParam;
+    if(imgURL) {
+        userParam = {...user, profileImage: imgURL}
+    }
+    else {
+        throw 'Image not uploaded';
+    }
+
+    Object.assign(user, userParam);
+
+    await user.save();
+
+    return user
+}
+
 async function remove(id: String) {
     await User.findByIdAndRemove(id);
 }
@@ -70,5 +92,6 @@ export {
     getById,
     create,
     update,
+    updateImage,
     remove
 }

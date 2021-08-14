@@ -3,9 +3,10 @@ import { errorMonitor } from 'events'
 import { authHeader } from '../_helpers/authHeader'
 
 export interface IUser {
-    username: string,
+    username?: string,
     email?: string,
-    password: string
+    password?: string,
+    profileImage?: FormData 
 }
 
 const userURL = "http://localhost:5000/users"
@@ -23,6 +24,28 @@ const login = async ({username, password}: IUser) => {
 
 const logout = () => {
     localStorage.removeItem('user');
+}
+
+
+
+const getUserProfileImg = () => {
+        let user = JSON.parse(localStorage.getItem('user')!)
+        console.log('USER INFO' + user);
+        if (user?.profileImage) {
+            console.log('profileImage: ' + user?.profileImage)
+            return user?.profileImage
+        }
+        return ''
+}
+
+const getStoredUserId = () => {
+        let user = JSON.parse(localStorage.getItem('user')!)
+        console.log('USER INFO' + user);
+        if (user?._id) {
+            console.log('USERID: ' + user?._id)
+            return user?._id
+        }
+        return ''
 }
 
 const getAll = async () => {
@@ -55,6 +78,19 @@ const register = async (userParam: IUser) => {
     }
 }
 
+const updateImage = async (image: FormData) => {
+    try {
+        const user = JSON.parse(localStorage.getItem('user')!)
+        const userId = user?._id
+        const response = await axios.post(userURL + "/profileImage/" + userId, image, {headers: authHeader()})
+        const data = await handleResponse(response)
+        localStorage.setItem('user', JSON.stringify(data))
+        return data
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 const getCurrent = async () => {
     console.log(authHeader())
     try {
@@ -74,7 +110,11 @@ export const userService = {
     getAll,
     getById,
     register,
-    getCurrent
+    getCurrent,
+    getStoredUserId,
+    getUserProfileImg,
+    updateImage
+
 }
 
 const handleResponse = (response: AxiosResponse) => {

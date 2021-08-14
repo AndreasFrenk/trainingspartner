@@ -5,6 +5,7 @@ import { jwt } from './_helpers/jwt.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
+import path from 'path'
 import userRoutes from './routes/users.js'
 
 //Configuration
@@ -12,6 +13,11 @@ const app = express()
 app.use(express.urlencoded({ limit: '25mb', extended: true }));
 app.use(express.json({ limit: '25mb' }))
 app.use(cors())
+const folderName = 'public'
+app.use(express.static(__dirname + '/../' + folderName));
+
+const folder = path.join(__dirname + '/../' + folderName)
+console.log('folder: ' + folder)
 app.use(jwt())
 
 //Routes

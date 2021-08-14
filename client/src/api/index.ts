@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 export interface IUser {
-    username: string,
+    username?: string,
     email?: string,
-    password: string
+    password?: string,
+    profileImage?: FormData,
 }
 
 const userURL = "http://localhost:5000/users"

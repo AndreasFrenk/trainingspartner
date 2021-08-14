@@ -1,0 +1,17 @@
+
+.popup {
+
+    &__content {
+      > div:first-child {
+        margin-top: 0;
+      }
+      > div {
+        margin-top: 20px;
+      }
+    }
+    .aside {
+      @media (min-width: 640px) {
+        flex-basis: 150px;
+      }
+    }
+  }

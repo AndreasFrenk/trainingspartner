@@ -67,3 +67,17 @@ export const getCurrentUser = () => async (dispatch: any) => {
         }
     )
 }
+
+export const updateImage = (userParam: api.IUser) => async (dispatch: any) => {
+    dispatch({type:'UPDATEIMAGE_REQUEST'})
+    userService.updateImage(userParam.profileImage as FormData).then(
+        user => {
+            dispatch({type: 'UPDATEIMAGE_SUCCESS', user})
+            //Push history
+        },
+        error => {
+            dispatch({type: 'UPDATEIMAGE_FAILURE'}, error)
+            //dispatch Alert Function
+        }
+    )
+}
