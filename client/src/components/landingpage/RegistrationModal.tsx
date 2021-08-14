@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {register} from '../../actions/users'
 
 interface Props {
@@ -8,6 +8,14 @@ interface Props {
 
 const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
 
+    
+    const registration = useSelector((state: any) => state.registration);
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    
+    const modalRef = React.useRef<HTMLInputElement>(null)
+    
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown)
         return () => {
@@ -15,11 +23,11 @@ const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
         }
     }, [])
 
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    
-    const modalRef = React.useRef<HTMLInputElement>(null)
+    useEffect(() => {
+        if (registration.registered) {
+            closeModal()
+        }
+    }, [registration])
 
     const handleKeyDown = (e: KeyboardEvent) => {
         if(e.key === 'Escape') {
@@ -29,6 +37,7 @@ const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
 
     const closeModal = () => {
         setShowModal(false)
+        dispatch({type: 'REGISTER_RESET'})
     }
 
     const handleClickOutside = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
@@ -42,7 +51,6 @@ const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(register({ username, password, email }))
-        closeModal()
     }
 
   return (
@@ -56,16 +64,19 @@ const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-4">
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="username">Username</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={username} onChange={(e) => setUsername(e.target.value)} type="text"placeholder="Username" />
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={username} onChange={(e) => setUsername(e.target.value)} type="text" required placeholder="Username" />
                         </div>
                         <div className="mb-4">
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="email">Email</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="Email"/>
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="Email"/>
                         </div>
                         <div>
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="password">Password</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"/>
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required placeholder="Password"/>
                         </div>
+                        {
+                            registration.failure ? <p className="text-red-600 py-2 px-3">{registration.error}</p> : ""
+                        }
                         <div className="mt-5 flex justify-center space-x-3">
                              <input type="submit" value="Register" className="font-bold   px-8 py-1 bg-blue-400 text-white hover:bg-opacity-80"/>
                         </div>

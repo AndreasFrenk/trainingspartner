@@ -1,11 +1,19 @@
-import React, { Component, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { Component, useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
+import { userActions, logout } from "../../actions/users";
 
 import "../../styles/landingpage.scss";
 import LoginModal from "./LoginModal";
 import RegistrationModal from "./RegistrationModal";
 
-const Landingpage = ()=>{
+interface Props extends RouteComponentProps {
+
+}
+
+const Landingpage: React.FC<Props> = ({history})=>{
+  const dispatch = useDispatch()
+  const authenticated = useSelector((state: any) => state.authentication);
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)
   const openModal = (modal: String) => {
@@ -15,9 +23,16 @@ const Landingpage = ()=>{
      setShowRegistrationModal(prev => !prev)
   }
 
+  useEffect(() => {
+    dispatch(userActions.getCurrentUser())
+  }, []);
 
+  useEffect(() => {
+    if (authenticated.loggedIn) {
+      history.push('/home')
+    }
+  }, [authenticated]);
 
- // console.log(users)
   return (
     <div>
         <div className="navbar flex w-full justify-between px-12 absolute">
@@ -27,7 +42,7 @@ const Landingpage = ()=>{
           <button className="navbar__link pl-5" onClick={() => openModal('Login')}>Anmelden</button>
         </div>
         </div>
-   <div className="big-banner h-screen w-full bg-cover" style={{backgroundImage: `url(https://wallpapercave.com/wp/EtxonAb.jpg)`,}}>
+       <div className="big-banner h-screen w-full bg-cover" style={{backgroundImage: `url(https://wallpapercave.com/wp/EtxonAb.jpg)`,}}>
 
     </div>
     {showRegistrationModal? <RegistrationModal setShowModal={setShowRegistrationModal}></RegistrationModal> : ""}

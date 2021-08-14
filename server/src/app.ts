@@ -7,6 +7,7 @@ dotenv.config()
 
 import path from 'path'
 import userRoutes from './routes/users.js'
+import { errorHandler } from './_helpers/errorHandler.js'
 
 //Configuration
 const app = express()
@@ -23,6 +24,8 @@ app.use(jwt())
 //Routes
 app.use('/users', userRoutes)
 
+//Error Handler
+app.use(errorHandler)
 
 const CONNECTION_URL = process.env.CONNECTION_URL!
 const PORT = process.env.PORT!

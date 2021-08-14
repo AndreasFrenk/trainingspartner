@@ -92,13 +92,10 @@ const updateImage = async (image: FormData) => {
 }
 
 const getCurrent = async () => {
-    console.log(authHeader())
     try {
         const {data} = await axios.get(userURL + "/current", {headers: authHeader()} )
-        console.log(data)
         return data
     } catch (error) {
-        console.log(error)
         logout();
         return Promise.reject(error)
     }
@@ -118,10 +115,10 @@ export const userService = {
 }
 
 const handleResponse = (response: AxiosResponse) => {
-        const data = response.data
-        if (response.status === 401) {
-            // auto logout if 401 response returned from api + TODO:push back to login route
-            logout();
-        }
-        return data;
+    const data = response.data
+    if (response.status === 401) {
+        // auto logout if 401 response returned from api + TODO:push back to login route
+        logout();
+    }
+    return data;
 }

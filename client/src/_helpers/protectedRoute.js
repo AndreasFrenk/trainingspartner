@@ -11,10 +11,7 @@ export const ProtectedRoute = ({ component: Component, ...restOfProps }) => {
         useEffect(() => {
             dispatch(getCurrentUser())
         }, []);
-        console.log(authenticated)
-        const isAuthenticated = localStorage.getItem("user") ? true : false;
-        console.log(isAuthenticated)
-        
+        const isAuthenticated = localStorage.getItem("user") ? true : false;        
     return (
       <Route
         {...restOfProps}
