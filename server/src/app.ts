@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import { jwt } from './_helpers/jwt.js'
 import dotenv from 'dotenv'
+import User from './models/users.js'
 dotenv.config()
 
 import path from 'path'
@@ -26,6 +27,8 @@ app.use('/users', userRoutes)
 
 //Error Handler
 app.use(errorHandler)
+
+
 
 const CONNECTION_URL = process.env.CONNECTION_URL!
 const PORT = process.env.PORT!

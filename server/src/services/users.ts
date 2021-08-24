@@ -60,6 +60,18 @@ async function update(id: String, userParam: IUser) {
     await user.save();
 }
 
+async function updateProfile(id: String, userParam: IUser) {
+    const user = await User.findById(id);
+
+    // validate
+    if (!user) throw 'User not found';
+    
+    // copy userParam properties to user
+    Object.assign(user.profile, userParam.profile);
+
+    await user.save();
+}
+
 async function updateImage(id: String, imgURL: String ) {
     const user = await User.findById(id);
 
@@ -85,6 +97,17 @@ async function remove(id: String) {
     await User.findByIdAndRemove(id);
 }
 
+async function findNearBy(id: String) {  
+    const user = await User.findById(id);
+    const userLocation = user?.profile.location.loc.coordinates;
+    const nearByUsers = await User.find({
+        "profile.location.loc": { $nearSphere: { $geometry: { type: "Point", coordinates: userLocation }, $maxDistance: 50000 }  },
+        _id: { $ne: id }
+    });
+    
+    return nearByUsers
+}
+
 export {
     authenticate,
     getAll,
@@ -92,5 +115,7 @@ export {
     create,
     update,
     updateImage,
-    remove
+    updateProfile,
+    remove,
+    findNearBy
 }

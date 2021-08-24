@@ -7,6 +7,18 @@ export interface IUser extends mongoose.Document {
   createdAt: Date;
   // profileImage: { data: Buffer, contentType: String };
   profileImage: String;
+  profile: {
+    sports: Array<string>,
+    age: Number,
+    location: {
+      city: string,
+      country: string,
+      loc: {
+        type: string,
+        coordinates: Array<Number>,
+      }
+    }
+  }
 }
 
 const userSchema: Schema = new mongoose.Schema({
@@ -15,8 +27,26 @@ const userSchema: Schema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, default: new Date() },
   profileImage: { type: String },
-  
+  profile: {
+    sports: {type: [String]},
+    age: {type: Number},
+    location: {
+      city: {type: String},
+      country: {type: String},
+      loc: {
+        type: {
+          type: String,
+          enum: ['Point']
+        },
+        coordinates: {
+          type: [Number]
+        }
+      }
+    }
+  }  
 });
+
+userSchema.index({"profile.location.loc": '2dsphere'})
 
 const User = mongoose.model<IUser>("User", userSchema);
 

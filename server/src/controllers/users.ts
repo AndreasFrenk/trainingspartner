@@ -39,6 +39,12 @@ const update = (req: Request, res: Response, next: NextFunction) => {
         .catch(err => next(err));
 }
 
+const updateProfile = (req: Request, res: Response, next: NextFunction) => {
+    userService.updateProfile(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
 const updateImage = (req: Request, res: Response, next: NextFunction) => {
         const dir = path.join(__dirname);
         const img = {
@@ -62,6 +68,12 @@ const remove = (req: Request, res: Response, next: NextFunction) => {
         .catch(err => next(err));
 }
 
+const findNearBy = (req: Request, res: Response, next: NextFunction) => {
+    userService.findNearBy(req.params.id)
+        .then((user) => res.json({user}))
+        .catch(err => next(err));
+}
+
 export {
     authenticate,
     getAll,
@@ -70,5 +82,7 @@ export {
     update,
     remove,
     getCurrent,
-    updateImage
+    updateImage,
+    updateProfile,
+    findNearBy
 }
