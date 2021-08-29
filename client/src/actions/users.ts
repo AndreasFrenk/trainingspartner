@@ -65,6 +65,19 @@ export const getCurrentUser = () => async (dispatch: any) => {
     )
 }
 
+export const getNearUsers = () => async (dispatch: any) => {
+    userService.getNearUsers()
+    .then(
+        users => {
+            dispatch({type: 'GET_NEAR_SUCCESS', users})
+            //Push history
+        },
+        error => {
+            dispatch({type: 'GET_NEAR_FAILURE', error})
+            //dispatch Alert Function
+        }
+    )
+}
 export const updateImage = (userParam: IUser) => async (dispatch: any) => {
     dispatch({type:'UPDATEIMAGE_REQUEST'})
     userService.updateImage(userParam.profileImage as FormData).then(
@@ -84,5 +97,6 @@ export const userActions = {
     logout,
     login,
     register,
-    updateImage
+    updateImage,
+    getNearUsers
 }

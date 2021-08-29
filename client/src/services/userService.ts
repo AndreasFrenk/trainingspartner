@@ -58,9 +58,21 @@ const getAll = async () => {
     }
 }
 
+const getNearUsers = async () => {
+    try {
+        let user = JSON.parse(localStorage.getItem('user')!)
+        const id = user._id
+        const response = await axios.get(userURL + '/findNearBy/' + id,{headers: authHeader()})
+        const data = await handleResponse(response)
+        return data
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 const getById = async (id: String) => {
     try {
-        const response = await axios.get(userURL + '/' + id,{headers: authHeader})
+        const response = await axios.get(userURL + '/' + id,{headers: authHeader()})
         const data = await handleResponse(response)
         return data
     } catch (error) {
@@ -110,8 +122,8 @@ export const userService = {
     getCurrent,
     getStoredUserId,
     getUserProfileImg,
-    updateImage
-
+    updateImage,
+    getNearUsers
 }
 
 const handleResponse = (response: AxiosResponse) => {

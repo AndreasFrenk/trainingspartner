@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { useDispatch} from 'react-redux'
 import {ProtectedRoute} from './_helpers/protectedRoute'
 import { Home } from './components/auth/home';
+import { NearUsers } from './components/auth/nearUsers';
 
 
 
@@ -18,6 +19,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={Landingpage} />
             <Route path="/profile" exact component={Profile} />
+            <Route path="/nearUsers" exact component={NearUsers} />
             <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
           </Switch>
       </Router>
