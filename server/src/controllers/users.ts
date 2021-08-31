@@ -34,18 +34,21 @@ const getById = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const update = (req: Request, res: Response, next: NextFunction) => {
+    if(req.params.id !== req.user.sub) throw 'Not allowed'
     userService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
 const updateProfile = (req: Request, res: Response, next: NextFunction) => {
+    if(req.params.id !== req.user.sub) throw 'Not allowed'
     userService.updateProfile(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
 const updateImage = (req: Request, res: Response, next: NextFunction) => {
+    if(req.params.id !== req.user.sub) throw 'Not allowed'
         const dir = path.join(__dirname);
         const img = {
         data: fs.readFileSync(path.join(__dirname + '/../../public/' + req?.file?.filename)),
@@ -63,6 +66,7 @@ const updateImage = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const remove = (req: Request, res: Response, next: NextFunction) => {
+    if(req.params.id !== req.user.sub) throw 'Not allowed'
     userService.remove(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));

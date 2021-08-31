@@ -8,6 +8,7 @@ dotenv.config()
 
 import path from 'path'
 import userRoutes from './routes/users.js'
+import postRoutes from './routes/posts'
 import { errorHandler } from './_helpers/errorHandler.js'
 
 //Configuration
@@ -24,6 +25,7 @@ app.use(jwt())
 
 //Routes
 app.use('/users', userRoutes)
+app.use('/posts', postRoutes)
 
 //Error Handler
 app.use(errorHandler)
