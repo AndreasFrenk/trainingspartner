@@ -38,8 +38,8 @@ const Landingpage: React.FC<Props> = ({history})=>{
         <div className="navbar flex w-full justify-between px-12 absolute">
             <div>Logo</div>
             <div className="navbar__right">
-            <button onClick={() => openModal('Register')} className="navbar__link">Jetzt registrieren</button>
-          <button className="navbar__link pl-5" onClick={() => openModal('Login')}>Anmelden</button>
+            <button id="registration" onClick={() => openModal('Register')} className="navbar__link">Jetzt registrieren</button>
+          <button id="login" className="navbar__link pl-5" onClick={() => openModal('Login')}>Anmelden</button>
         </div>
         </div>
        <div className="big-banner h-screen w-full bg-cover" style={{backgroundImage: `url(https://wallpapercave.com/wp/EtxonAb.jpg)`,}}>

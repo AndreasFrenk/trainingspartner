@@ -58,27 +58,27 @@ const RegistrationModal: React.FC<Props> = ({setShowModal})=>{
     justify-center items-center">
             <div ref={modalRef} className="bg-white max-w-sm py-4 px-20 shadow-xl">
                 <div className="flex justify-center items-center">
-                    <h1 className="text-blue-500 font-bold text-xl">Sign In</h1>
+                    <h1 className="text-blue-500 font-bold text-xl">Registration</h1>
                 </div>
                 <div className="mt-2 text-sm">
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-4">
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="username">Username</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={username} onChange={(e) => setUsername(e.target.value)} type="text" required placeholder="Username" />
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" id="username" value={username} onChange={(e) => setUsername(e.target.value)} type="text" required placeholder="Username" />
                         </div>
                         <div className="mb-4">
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="email">Email</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="Email"/>
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="Email"/>
                         </div>
                         <div>
                             <label className="block text-gray-600 text-sm font-bold mb-2" htmlFor="password">Password</label>
-                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required placeholder="Password"/>
+                            <input className="shadow appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight  focus:outline-none focus:shadow-outline" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required placeholder="Password"/>
                         </div>
                         {
                             registration.failure ? <p className="text-red-600 py-2 px-3">{registration.error}</p> : ""
                         }
                         <div className="mt-5 flex justify-center space-x-3">
-                             <input type="submit" value="Register" className="font-bold   px-8 py-1 bg-blue-400 text-white hover:bg-opacity-80"/>
+                             <input id="submit" type="submit" value="Register" className="font-bold   px-8 py-1 bg-blue-400 text-white hover:bg-opacity-80"/>
                         </div>
                     </form>
                 </div>

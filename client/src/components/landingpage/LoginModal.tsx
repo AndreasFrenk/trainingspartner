@@ -69,6 +69,7 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
                 onChange={(e) => setUsername(e.target.value)}
                 type="text"
                 placeholder="Username"
+                id="username"
               />
             </div>
             <div>
@@ -84,6 +85,7 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+                id="password"
               />
             </div>
             {
@@ -94,6 +96,7 @@ const LoginModal: React.FC<Props> = ({ setShowModal }) => {
                 type="submit"
                 value="Log In"
                 className="px-3 py-1 bg-blue-400 text-white hover:bg-opacity-80"
+                id="submit"
               />
             </div>
           </form>
