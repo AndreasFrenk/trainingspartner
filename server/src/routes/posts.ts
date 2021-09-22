@@ -5,7 +5,7 @@ import {comment, create, getAll, like, remove, update} from "../controllers/post
 const router = express.Router()
 
 // routes
-router.post('/create', create);
+router.post('/', create);
 router.get('/', getAll);
 router.post('/:id/comment', comment)
 router.post('/:id/like', like)
