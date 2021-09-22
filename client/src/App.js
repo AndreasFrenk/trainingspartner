@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { useDispatch} from 'react-redux'
 import {ProtectedRoute} from './_helpers/protectedRoute'
 import { Home } from './components/auth/home';
+import { Feed } from './components/auth/feed';
 import { NearUsers } from './components/auth/nearUsers';
 
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/profile" exact component={Profile} />
             <Route path="/nearUsers" exact component={NearUsers} />
             <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
+            <Route path="/feed" exact component={Feed} />
           </Switch>
       </Router>
     </BrowserRouter>

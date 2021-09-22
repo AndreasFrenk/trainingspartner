@@ -97,7 +97,7 @@ async function remove(id: String) {
     await User.findByIdAndRemove(id);
 }
 
-async function findNearBy(id: String) {  
+async function findNearBy(id: String) { 
     const user = await User.findById(id);
     const userLocation = user?.profile.location.loc.coordinates;
     const nearByUsers = await User.find({

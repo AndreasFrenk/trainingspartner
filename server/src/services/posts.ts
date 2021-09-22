@@ -4,7 +4,16 @@ import Posts, { IPosts } from '../models/posts.js'
 import User from '../models/users'
 
 async function getAll() {
-    return await Posts.find();
+    //return await Posts.find();
+    const posts =  await Posts.aggregate([{
+        $lookup:{
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "userProfile"
+        }
+    }]).sort('-createdAt')
+    return posts
 }
 
 async function create(postParam: IPosts) {
@@ -45,6 +54,7 @@ async function like(id: String, param: {user: string}) {
 }
 
 async function comment(id: string, commentParam: IComment) {
+    console.log(commentParam)
     const post = await Post.findById(id)
     const user = await User.findById(commentParam.user)
     if(!post || !user) throw 'Post not found'
