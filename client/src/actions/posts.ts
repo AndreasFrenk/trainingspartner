@@ -23,7 +23,8 @@ export const create = (postParam: IPosts, userProfile: IUser) => async (dispatch
     const newPost = {
         ...postParam,
         createdAt: new Date().toUTCString(),
-        userProfile: [userProfile] 
+        userProfile: [userProfile],
+        likes: [] 
     }
     postService.create(postParam).then(
         post => {
