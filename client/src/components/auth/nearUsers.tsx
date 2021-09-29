@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { userActions } from "../../actions/users";
 import { useDispatch, useSelector } from "react-redux";
 import placeHolderImage from "../../assets/placeholder_profile.jpeg";
+import Navbar from "./navbar";
 
 export const NearUsers: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ export const NearUsers: React.FC = () => {
 
   return nearUsers.user ? (
     <div>
+      <Navbar currentPath="Near User"></Navbar>
+      <div className="pt-20">
+
       <h1 className="text-gray-700 text-2xl px-4 py-5">Nearby Users</h1>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 py-2 px-8">
         {nearUsers.user.map((user: any, index: number) => (
@@ -75,8 +79,13 @@ export const NearUsers: React.FC = () => {
           </div>
         ))}
       </div>
+      </div>
     </div>
   ) : (
-    <div>Loading</div>
+<div>
+
+  <Navbar currentPath="Near User"></Navbar>
+<div>Loading</div>
+</div>
   );
 };

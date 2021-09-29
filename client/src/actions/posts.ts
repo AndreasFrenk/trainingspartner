@@ -9,6 +9,7 @@ export const getAll = () => async (dispatch: any) => {
     console.log('getting posts')
     postService.getAll().then(
         posts => {
+            console.log(posts)
             dispatch({type: 'GETALL_POSTS_SUCCESS', posts})
         },
         error => {
@@ -23,12 +24,12 @@ export const create = (postParam: IPosts, userProfile: IUser) => async (dispatch
     const newPost = {
         ...postParam,
         createdAt: new Date().toUTCString(),
-        userProfile: [userProfile] 
+        userProfile: [userProfile],
+        likes: []
     }
     postService.create(postParam).then(
         post => {
-            dispatch({type: 'CREATE_POST_SUCCESS', newPost})
-            //Push history
+            dispatch(getAll());
         },
         error => {
             dispatch({type: 'CREATE_POST_FAILURE', error: error.response.data.message})

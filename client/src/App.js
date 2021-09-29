@@ -21,12 +21,12 @@ function App() {
             <Route path="/" exact component={Landingpage} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/nearUsers" exact component={NearUsers} />
-            <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
-            <Route path="/feed" exact component={Feed} />
+            <ProtectedRoute path="/home" exact component={Feed} />
           </Switch>
       </Router>
     </BrowserRouter>
   );
 }
 
+           //<ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
 export default App;

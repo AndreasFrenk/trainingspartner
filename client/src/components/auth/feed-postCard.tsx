@@ -11,9 +11,10 @@ function FeedPostCard(props: any) {
   const changeCommentMessage = (event: BaseSyntheticEvent) => {
     setcommentMessage(event.target.value);
   };
-  const user = JSON.parse(
+ /* const user = JSON.parse(
     useSelector((state: any) => state.authentication).user
-  );
+  );*/
+  const user = JSON.parse(localStorage.getItem('user')!)
   const submitComment = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(
@@ -39,7 +40,7 @@ function FeedPostCard(props: any) {
   };
   useEffect(() => {}, []);
   return (
-    <div className="mx-64 my-5 border-2 border-gray-50 rounded-sm">
+    <div className="bg-white mx-64 my-5 border-2 border-gray-50 rounded-lg">
       <div className="px-3 py-1">
         <span className="text-xl">{props.post.userProfile[0].username}, </span>
         <span>{props.post.userProfile[0].profile.location.city}</span>
@@ -88,10 +89,10 @@ function FeedPostCard(props: any) {
           ""
         )}
       </div>
-      <div className="my-3 mx-2 border-2">
+      <div className="my-3 mx-2 border-2 rounded-lg">
         <form onSubmit={(e) => submitComment(e)}>
           <input
-            className="w-full"
+            className="w-full p-1"
             type="text"
             placeholder="Write a comment.."
             value={commentMessage}
@@ -101,7 +102,7 @@ function FeedPostCard(props: any) {
       </div>
       {props.post.comments
         ? props.post.comments.map((comment: any, index: string) => (
-            <div key={index} className="my-4 mx-2 bg-gray-300 rounded-sm">
+            <div key={index} className="my-4 mx-2 bg-gray-100 rounded-lg">
               <p className="px-2 text-sm font-bold">{comment.username}</p>
               <p className="px-3 pb-2 text-sm">{comment.text}</p>
             </div>

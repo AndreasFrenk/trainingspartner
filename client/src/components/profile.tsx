@@ -5,7 +5,7 @@ import "../styles/utils.scss";
 import "../styles/pages/profile.scss";
 import Popup from './page-components/popup';
 import { userService } from '../services/userService';
-
+import Navbar from './auth/navbar'
 interface profileSettings {
   showPopup: boolean;
   displayType: string;
@@ -37,6 +37,9 @@ class Profile extends React.Component<{ }, profileSettings> {
   render() {
     return (
       <div>
+        <Navbar currentPath="Profile"></Navbar>
+        <div className="">
+          
         <div
           className="w-full mb-6 background"
           style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -65,6 +68,7 @@ class Profile extends React.Component<{ }, profileSettings> {
         </div>
         <div className="profile__interests">
           <div></div>
+        </div>
         </div>
       </div>
     );
