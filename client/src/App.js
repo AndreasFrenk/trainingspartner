@@ -8,6 +8,7 @@ import { useDispatch} from 'react-redux'
 import {ProtectedRoute} from './_helpers/protectedRoute'
 import { Home } from './components/auth/home';
 import { NearUsers } from './components/auth/nearUsers';
+import  Chat from './components/chat/chat';
 
 
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" exact component={Landingpage} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/nearUsers" exact component={NearUsers} />
+            <Route path="/chat" exact component={Chat} />
             <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
           </Switch>
       </Router>

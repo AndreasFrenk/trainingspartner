@@ -12,6 +12,7 @@
     "@types/express-jwt": "^6.0.2",
     "@types/jsonwebtoken": "^8.5.4",
     "@types/mongoose": "^5.11.97",
+    "amqplib": "^0.8.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.2.0",
     "cors": "^2.8.5",
@@ -20,7 +21,8 @@
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "socket.io": "^4.2.0"
   },
   "scripts": {
     "watch-ts": "tsc -w",

@@ -38,6 +38,14 @@ const getUserProfileImg = () => {
         return ''
 }
 
+const getStoredUserName = () => {
+        let user = JSON.parse(localStorage.getItem('user')!)
+        if (user?.username) {
+            return user.username
+        }
+        return ''
+}
+
 const getStoredUserId = () => {
         let user = JSON.parse(localStorage.getItem('user')!)
         console.log('USER INFO' + user);
@@ -120,6 +128,7 @@ export const userService = {
     getById,
     register,
     getCurrent,
+    getStoredUserName,
     getStoredUserId,
     getUserProfileImg,
     updateImage,
