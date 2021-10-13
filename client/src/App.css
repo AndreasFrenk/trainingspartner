@@ -46,3 +46,10 @@
   height: 300px;
   background-size: cover;
 }
+html, body, #root {
+  height: 100%;
+}
+
+.active {
+  background: #FCA61F;
+}
