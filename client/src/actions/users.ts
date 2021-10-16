@@ -78,6 +78,37 @@ export const getNearUsers = () => async (dispatch: any) => {
         }
     )
 }
+
+// export const getUserInfo = (id: string) => (dispatch: any) => {
+//     userService.getUserInfo(id)
+//     .then(
+//         users => {
+//             dispatch({type: 'GET_USERINFO_SUCCESS', users})
+//             //Push history
+//         },
+//         error => {
+//             dispatch({type: 'GET_USERINFO_FAILURE', error})
+//             //dispatch Alert Function
+//         }
+//     )
+
+// }
+
+export const getById = (id: string) => async (dispatch: any) => {
+    userService.getById(id)
+    .then(
+        user => {
+            console.log(user)
+            dispatch({type: 'GET_BYID_SUCCESS', user})
+            //Push history
+        },
+        error => {
+            dispatch({type: 'GET_BYID_FAILURE', error})
+            //dispatch Alert Function
+        }
+    )
+}
+
 export const updateImage = (userParam: IUser) => async (dispatch: any) => {
     dispatch({type:'UPDATEIMAGE_REQUEST'})
     userService.updateImage(userParam.profileImage as FormData).then(
@@ -98,5 +129,6 @@ export const userActions = {
     login,
     register,
     updateImage,
-    getNearUsers
+    getNearUsers,
+    getById,
 }

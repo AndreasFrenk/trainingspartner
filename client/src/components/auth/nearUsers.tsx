@@ -2,8 +2,13 @@ import React, { useEffect } from "react";
 import { userActions } from "../../actions/users";
 import { useDispatch, useSelector } from "react-redux";
 import placeHolderImage from "../../assets/placeholder_profile.jpeg";
+import { RouteComponentProps } from "react-router-dom";
 
-export const NearUsers: React.FC = () => {
+interface props extends RouteComponentProps {
+
+}
+
+export const NearUsers: React.FC<props> = ({history}) => {
   const dispatch = useDispatch();
   const nearUsers = useSelector((state: any) => state.nearUsers);
   useEffect(() => {
@@ -48,6 +53,7 @@ export const NearUsers: React.FC = () => {
           <div
             key={index}
             className="overflow-hidden shadow-lg transform transition duration-500 hover:scale-110"
+            onClick={() => {history.push(`/profile/${user?._id}`)}}
           >
             <img
               className="w-full max-h-28 object-contain"

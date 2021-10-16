@@ -10,6 +10,7 @@ import { Home } from './components/auth/home';
 import { Feed } from './components/auth/feed';
 import { NearUsers } from './components/auth/nearUsers';
 import  Chat from './components/chat/chat';
+import {OtherProfile} from './components/otherProfile';
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={Landingpage} />
             <Route path="/profile" exact component={Profile} />
+            <Route path="/profile/:userid" exact component={OtherProfile} />
             <Route path="/nearUsers" exact component={NearUsers} />
             <Route path="/chat" exact component={Chat} />
             <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>

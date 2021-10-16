@@ -20,7 +20,6 @@ class Profile extends React.Component<{ }, profileSettings> {
     this.updateProfileImage = this.updateProfileImage.bind(this);
   }
   showPopup(displayType: string) {
-    console.log(this.state)
     this.setState({
       showPopup: !this.state.showPopup,
       displayType: displayType
