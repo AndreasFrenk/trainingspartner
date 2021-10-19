@@ -4,7 +4,7 @@ import User, { IUser } from '../models/users.js'
 
 async function authenticate({ username, password }: IUser) {
     const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && bcrypt.compareSync(password, user?.password)) {
         const token = jwt.sign({ sub: user.id }, process.env.SECRET!, { expiresIn: '1d' });
         return {
             ...user.toJSON(),
@@ -19,7 +19,7 @@ async function getAll() {
 }
 
 async function getById(id: String) {
-    return await User.findById(id);
+    return await User.findById(id).lean();
 }
 
 async function create(userParam: IUser) {
@@ -57,7 +57,7 @@ async function update(id: String, userParam: IUser) {
     // copy userParam properties to user
     Object.assign(user, userParam);
 
-    await user.save();
+    return await user.save();
 }
 
 async function updateProfile(id: String, userParam: IUser) {
@@ -69,7 +69,7 @@ async function updateProfile(id: String, userParam: IUser) {
     // copy userParam properties to user
     Object.assign(user.profile, userParam.profile);
 
-    await user.save();
+    return await user.save();
 }
 
 async function updateImage(id: String, imgURL: String ) {
@@ -88,9 +88,8 @@ async function updateImage(id: String, imgURL: String ) {
 
     Object.assign(user, userParam);
 
-    await user.save();
+    return await user.save();
 
-    return user
 }
 
 async function remove(id: String) {  

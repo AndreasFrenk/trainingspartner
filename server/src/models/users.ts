@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 export interface IUser extends mongoose.Document {
   username: string;
   email: string;
-  password: string;
+  password?: string;
   createdAt: Date;
   // profileImage: { data: Buffer, contentType: String };
   profileImage: String;

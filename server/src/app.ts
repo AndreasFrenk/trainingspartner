@@ -3,13 +3,11 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { jwt } from "./_helpers/jwt.js";
 import dotenv from "dotenv";
-import User from "./models/users.js";
 dotenv.config();
 
 import path from "path";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts";
-import chatRoutes from "./routes/chat";
 import { errorHandler } from "./_helpers/errorHandler.js";
 
 //Configuration
@@ -27,7 +25,6 @@ app.use(jwt());
 //Routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
-app.use("/chat", chatRoutes);
 
 //Error Handler
 app.use(errorHandler);

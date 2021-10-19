@@ -2,10 +2,21 @@ import * as userService from '../services/users.js'
 import {Request, Response, NextFunction} from 'express'
 import path from 'path'
 import fs from 'fs'
+// sorry for bad typing 
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     userService.authenticate(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+        // .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  Object.assign({}, user)
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
         .catch(err => next(err));
 }
 
@@ -23,46 +34,89 @@ const getAll = (req: Request, res: Response, next: NextFunction) => {
 
 const getCurrent = (req: Request, res: Response, next: NextFunction) => {
     userService.getById(req.user?.sub)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+        // .then(user => user ? res.json(user) : res.sendStatus(404))
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  {...user}
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
         .catch(err => next(err));
 }
 
 const getById = (req: Request, res: Response, next: NextFunction) => {
     userService.getById(req.params.id)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+        // .then(user => user ? res.json(user) : res.sendStatus(404))
+        // .then(user => {user ? res.json(user) : res.sendStatus(404)})
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  Object.assign({}, user)
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
         .catch(err => next(err));
 }
 
-const update = (req: Request, res: Response, next: NextFunction) => {
+const updateUser = (req: Request, res: Response, next: NextFunction) => {
     if(req.params.id !== req.user.sub) throw 'Not allowed'
     userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  Object.assign({}, user)?._doc
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
         .catch(err => next(err));
 }
 
 const updateProfile = (req: Request, res: Response, next: NextFunction) => {
     if(req.params.id !== req.user.sub) throw 'Not allowed'
     userService.updateProfile(req.params.id, req.body)
-        .then(() => res.json({}))
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  Object.assign({}, user)?._doc
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
+        // .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
 const updateImage = (req: Request, res: Response, next: NextFunction) => {
     if(req.params.id !== req.user.sub) throw 'Not allowed'
         const dir = path.join(__dirname);
-        const img = {
-        data: fs.readFileSync(path.join(__dirname + '/../../public/' + req?.file?.filename)),
-        contentType: req?.file?.mimetype
-    }
     const imgURL = 'http://localhost:5000/' +  req?.file?.filename;
-    const newPath = path.join(__dirname + '/' + req?.file?.filename);
-    fs.rename(path.join(__dirname + '/' + req?.file?.filename), newPath, (err) => {
-      console.log(err);
     userService.updateImage( req.params.id, imgURL)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+        .then(user =>  {
+            if(user) {
+            const filteredUser =  Object.assign({}, user)?._doc
+            delete filteredUser?.password
+             res.json(filteredUser)
+            }
+             else {
+                 res.sendStatus(404)
+                }
+            })
+        // .then(user => user ? res.json(user) : res.sendStatus(404))
         // .then(() => res.json({}))
         .catch(err => next(err));
-})
+// })
 }
 
 const remove = (req: Request, res: Response, next: NextFunction) => {
@@ -83,7 +137,7 @@ export {
     getAll,
     getById,
     register,
-    update,
+    updateUser,
     remove,
     getCurrent,
     updateImage,

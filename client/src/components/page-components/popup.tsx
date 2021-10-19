@@ -40,7 +40,7 @@ const Popup = (props: profileSettings) => {
 
     const data = new FormData();
     data.append("file", fileSelected as Blob);
-    dispatch(updateImage({profileImage: data as FormData}))
+    // dispatch(updateImage({profileImage: data as FormData}))
     setTimeout(() => {
     props.updateProfileImage()
     props.displayPopup()

@@ -79,21 +79,6 @@ export const getNearUsers = () => async (dispatch: any) => {
     )
 }
 
-// export const getUserInfo = (id: string) => (dispatch: any) => {
-//     userService.getUserInfo(id)
-//     .then(
-//         users => {
-//             dispatch({type: 'GET_USERINFO_SUCCESS', users})
-//             //Push history
-//         },
-//         error => {
-//             dispatch({type: 'GET_USERINFO_FAILURE', error})
-//             //dispatch Alert Function
-//         }
-//     )
-
-// }
-
 export const getById = (id: string) => async (dispatch: any) => {
     userService.getById(id)
     .then(
@@ -109,9 +94,9 @@ export const getById = (id: string) => async (dispatch: any) => {
     )
 }
 
-export const updateImage = (userParam: IUser) => async (dispatch: any) => {
+export const updateImage = (profileImage: FormData) => async (dispatch: any) => {
     dispatch({type:'UPDATEIMAGE_REQUEST'})
-    userService.updateImage(userParam.profileImage as FormData).then(
+    userService.updateImage(profileImage as FormData).then(
         user => {
             dispatch({type: 'UPDATEIMAGE_SUCCESS', user})
             //Push history
@@ -122,6 +107,35 @@ export const updateImage = (userParam: IUser) => async (dispatch: any) => {
         }
     )
 }
+
+// export const updateProfile = (userParam: IUser) => async (dispatch: any) => {
+//     dispatch({type:'UPDATEPROFILE_REQUEST'})
+//     userService.updateImage(userParam.profileImage as FormData).then(
+//         user => {
+//             dispatch({type: 'UPDATEPROFILE_SUCCESS', user})
+//             //Push history
+//         },
+//         error => {
+//             dispatch({type: 'UPDATEPROFILE_FAILURE'}, error)
+//             //dispatch Alert Function
+//         }
+//     )
+// }
+
+export const updateUser = (userParam: IUser) => async (dispatch: any) => {
+    dispatch({type:'UPDATEUSER_REQUEST'})
+    userService.updateUser(userParam).then(
+        user => {
+            dispatch({type: 'UPDATEUSER_SUCCESS', user})
+            //Push history
+        },
+        error => {
+            dispatch({type: 'UPDATEUSER_FAILURE'}, error)
+            //dispatch Alert Function
+        }
+    )
+}
+
 export const userActions = {
     getUsers,
     getCurrentUser,
@@ -131,4 +145,6 @@ export const userActions = {
     updateImage,
     getNearUsers,
     getById,
+    // updateProfile,
+    updateUser
 }
