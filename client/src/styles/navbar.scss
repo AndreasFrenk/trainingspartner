@@ -1,0 +1,16 @@
+.dropdown {
+
+    &--open {
+        z-index: 4; 
+        .dropdown {
+            &__arrow {
+            transform: rotate(180deg);
+            }
+            &__navigation {
+                display: flex;
+                width: 120px;
+                
+            }
+        }
+    }
+}

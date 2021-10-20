@@ -12,6 +12,7 @@ import  Chat from './components/chat/chat';
 import {Profile} from './components/profile';
 import {OtherProfile} from './components/otherProfile';
 import { EditProfile } from './components/editProfile';
+import { Navbar } from './components/page-components/navbar';
 
 
 
@@ -20,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Router>
+        <Navbar></Navbar>
           <Switch>
             <Route path="/" exact component={Landingpage} />
             <Route path="/edit-profile" exact component={EditProfile} />
