@@ -7,6 +7,7 @@ export interface IUser extends mongoose.Document {
   createdAt: Date;
   // profileImage: { data: Buffer, contentType: String };
   profileImage: String;
+  edited: boolean;
   profile: {
     sports: Array<string>,
     age: Number,
@@ -27,6 +28,7 @@ const userSchema: Schema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, default: new Date() },
   profileImage: { type: String },
+  edited: {type: Boolean, default: false},
   profile: {
     sports: {type: [String]},
     age: {type: Number},

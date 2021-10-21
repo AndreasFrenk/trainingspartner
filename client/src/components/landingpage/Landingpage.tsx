@@ -28,8 +28,12 @@ const Landingpage: React.FC<Props> = ({history})=>{
   }, []);
 
   useEffect(() => {
-    if (authenticated.loggedIn) {
+    if (authenticated.loggedIn && authenticated.user.edited) {
       history.push('/home')
+    }
+    if (authenticated.loggedIn && !authenticated.user.edited) {
+      console.log(authenticated)
+      history.push('/edit-profile')
     }
   }, [authenticated]);
 

@@ -40,7 +40,7 @@ export const Navbar = () => {
           setOpenMenu(!openMenu);
         }}
       >
-        <div className="flex items-end">
+        <div className="flex items-end cursor-pointer">
           <img
             className="rounded  mt-2 w-10 h-10 border-black mr-4"
             src={user?.profileImage ? user?.profileImage : placeHolderImage}

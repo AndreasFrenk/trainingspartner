@@ -53,6 +53,7 @@ async function update(id: String, userParam: IUser) {
     if (userParam.password) {
         userParam.password = bcrypt.hashSync(userParam.password, 10);
     }
+    userParam.edited = true;
 
     // copy userParam properties to user
     Object.assign(user, userParam);
