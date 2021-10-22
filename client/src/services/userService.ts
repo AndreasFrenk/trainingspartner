@@ -43,9 +43,7 @@ const logout = () => {
 
 const getUserProfileImg = () => {
   let user = JSON.parse(localStorage.getItem("user")!);
-  console.log("USER INFO" + user);
   if (user?.profileImage) {
-    console.log("profileImage: " + user?.profileImage);
     return user?.profileImage;
   }
   return "";
@@ -61,9 +59,7 @@ const getStoredUserName = () => {
 
 const getStoredUserId = () => {
   let user = JSON.parse(localStorage.getItem("user")!);
-  console.log("USER INFO" + user);
   if (user?._id) {
-    console.log("USERID: " + user?._id);
     return user?._id;
   }
   return "";

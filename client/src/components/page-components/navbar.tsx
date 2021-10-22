@@ -59,8 +59,12 @@ export const Navbar = () => {
         <div
           className={`rounded-md flex-col absolute mt-3 right-0 p-3 mr-1 light-blue-background hidden dropdown__navigation`}
         >
-          <NavLink to="/edit-profile" className="p-2">Edit</NavLink>
-          <NavLink to="/profile" className="p-2">me</NavLink>
+          <NavLink to="/edit-profile" className="p-2">
+            Edit
+          </NavLink>
+          <NavLink to="/profile" className="p-2">
+            me
+          </NavLink>
           <a onClick={() => logout()} className="cursor-pointer p-2">
             Log Out
           </a>

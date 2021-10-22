@@ -20,17 +20,17 @@ function App() {
   
   return (
     <BrowserRouter>
+      <Navbar></Navbar>
       <Router>
-        <Navbar></Navbar>
           <Switch>
             <Route path="/" exact component={Landingpage} />
-            <Route path="/edit-profile" exact component={EditProfile} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/profile/:userid" exact component={OtherProfile} />
-            <Route path="/nearUsers" exact component={NearUsers} />
-            <Route path="/chat" exact component={Chat} />
+            <ProtectedRoute path="/edit-profile" exact component={EditProfile} />
+            <ProtectedRoute path="/profile" exact component={Profile} />
+            <ProtectedRoute path="/profile/:userid" exact component={OtherProfile} />
+            <ProtectedRoute path="/nearUsers" exact component={NearUsers} />
+            <ProtectedRoute path="/chat" exact component={Chat} />
             <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
-            <Route path="/feed" exact component={Feed} />
+            <ProtectedRoute path="/feed" exact component={Feed} />
           </Switch>
       </Router>
     </BrowserRouter>

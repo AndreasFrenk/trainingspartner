@@ -1,4 +1,4 @@
-import { useState, useEffect, Key } from "react";
+import { useState, useEffect, Key, useRef } from "react";
 import { connection } from "./socket";
 import { userService } from "../../services/userService";
 import "../../styles/chat.scss";
@@ -22,16 +22,17 @@ interface chat {
 const defaultUser = {
   username: "all",
   userID: "all",
-  dbUserID: "all"
-}
+  dbUserID: "all",
+};
 
 const Chat: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [allMessages, setAllMessages] = useState<chat[]>([]);
   const [allUsers, setAllUsers] = useState<user[]>([]);
-  const [messageReciever, setmessageReciever] = useState<user>(defaultUser);
+  const [messageReciever, setmessageReciever] = useState<user | null>(null);
   const userName = userService.getStoredUserName();
   const [dbUserID, setdbUserID] = useState<string>("");
+  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const dbUserID = userService.getStoredUserId();
@@ -68,9 +69,7 @@ const Chat: React.FC = () => {
       setAllMessages((prevMessages: chat[]) => {
         const messages = [...prevMessages];
         let index;
-          index = prevMessages.findIndex(
-            (entry) => entry.chat === chat 
-          );
+        index = prevMessages.findIndex((entry) => entry.chat === chat);
         if (index !== -1) {
           const entry = [...prevMessages[index].chatMessages];
           entry.push({
@@ -89,7 +88,7 @@ const Chat: React.FC = () => {
                 username: username,
                 message: message,
                 sender: sender,
-                receiver: receiver
+                receiver: receiver,
               },
             ],
           });
@@ -105,7 +104,7 @@ const Chat: React.FC = () => {
         message,
         sender,
         receiver,
-        chat
+        chat,
       }: {
         username: string;
         sender: string;
@@ -118,7 +117,7 @@ const Chat: React.FC = () => {
           receiver: receiver,
           sender: sender,
           message: message,
-          chat: chat
+          chat: chat,
         });
       }
     );
@@ -129,7 +128,7 @@ const Chat: React.FC = () => {
         message,
         sender,
         receiver,
-        chat
+        chat,
       }: {
         username: string;
         sender: string;
@@ -139,14 +138,14 @@ const Chat: React.FC = () => {
       }) => {
         console.log("receiver: " + receiver);
         console.log("dbUserID: " + dbUserID);
-        console.log(allUsers)
-        
+        console.log(allUsers);
+
         handleMessages({
           username: username,
           receiver: receiver,
           sender: sender,
           message: message,
-          chat: chat
+          chat: chat,
         });
       }
     );
@@ -170,20 +169,20 @@ const Chat: React.FC = () => {
         sender,
         message,
         receiver,
-        chat
+        chat,
       }: {
         username: string;
         sender: string;
         message: string;
         receiver: string;
-        chat: string
+        chat: string;
       }) => {
         handleMessages({
           username: username,
           receiver: receiver,
           sender: sender,
           message: message,
-          chat: chat
+          chat: chat,
         });
       }
     );
@@ -226,13 +225,29 @@ const Chat: React.FC = () => {
     }
   };
 
+  const handleClickOutside = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
+    if (!chatRef.current?.contains(e.target as Node)) {
+      // setmessageReciever(null)
+    }
+  };
+
   return (
-    <div className="flex w-100 chat-container m-auto border-2 h-full">
-      <div className="flex flex-col flex-1 border-r-2 p-4">
+    <div
+      className="flex w-100 chat-container m-auto border-2 h-4/6"
+      onClick={(e) => handleClickOutside(e)}
+    >
+      <div
+        className={`${
+          !messageReciever ? "" : "hidden"
+        } flex sm:flex flex-col flex-1 border-r-2 p-4`}
+        ref={chatRef}
+      >
         <div>Users:</div>
         <div
           className={`p-4 w-full cursor-pointer ${
-            messageReciever.dbUserID === "all" ? "active" : ""
+            messageReciever?.dbUserID === "all" ? "active" : ""
           }`}
           onClick={() => setmessageReciever(defaultUser)}
         >
@@ -244,7 +259,7 @@ const Chat: React.FC = () => {
                 <div
                   key={index}
                   className={`p-4 w-full cursor-pointer ${
-                    messageReciever.dbUserID === user.dbUserID ? "active" : ""
+                    messageReciever?.dbUserID === user.dbUserID ? "active" : ""
                   }`}
                   onClick={() => setmessageReciever(user)}
                 >
@@ -256,12 +271,34 @@ const Chat: React.FC = () => {
             })
           : null}
       </div>
-      <div className="hidden sm:flex flex-col flex-2 p-4">
+      <div
+        className={`${
+          !!messageReciever ? "flex" : "hidden"
+        } sm:flex flex-col flex-2 p-4`}
+      >
+        {messageReciever ? (
+          <div className="justify-center flex relative items-center border-2 w-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              className="absolute left-0 sm:hidden"
+              onClick={() => {
+                setmessageReciever(null);
+              }}
+            >
+              <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z" />
+            </svg>
+            <div className="font-bold m-auto">{messageReciever?.username}</div>
+          </div>
+        ) : null}
         <div className="message-container h-full">
           {allMessages && allMessages.length > 0
             ? allMessages[
                 allMessages.findIndex(
-                  (entry) => entry.chat === messageReciever.dbUserID
+                  (entry) => entry.chat === messageReciever?.dbUserID
                 )
               ]?.chatMessages?.map(
                 (chatMessage: chatMessage, index: number) => {
