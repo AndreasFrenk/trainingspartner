@@ -7,7 +7,7 @@
   },
   "scripts": {
     "cypress": "cypress open",
-    "heroku-start-client": "cd client && yarn start",
+    "heroku-start-client": "cd client && yarn heroku-production",
     "heroku-start-server": "cd server && yarn watch"
   }
 }
