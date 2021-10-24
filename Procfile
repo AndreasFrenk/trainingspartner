@@ -1,0 +1,1 @@
+web: yarn heroku-start-client && yarn heroku-start-server
