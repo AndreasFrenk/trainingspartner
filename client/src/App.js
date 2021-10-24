@@ -20,16 +20,18 @@ function App() {
   
   return (
     <BrowserRouter>
-      <Navbar></Navbar>
       <Router>
           <Switch>
             <Route path="/" exact component={Landingpage} />
+            <>
+          <Navbar></Navbar>
             <ProtectedRoute path="/edit-profile" exact component={EditProfile} />
             <ProtectedRoute path="/profile" exact component={Profile} />
             <ProtectedRoute path="/profile/:userid" exact component={OtherProfile} />
             <ProtectedRoute path="/nearUsers" exact component={NearUsers} />
             <ProtectedRoute path="/chat" exact component={Chat} />
             <ProtectedRoute path="/home" exact component={Feed}></ProtectedRoute>
+            </>
           </Switch>
       </Router>
     </BrowserRouter>

@@ -30,7 +30,7 @@ export const Navbar = () => {
   };
   return user ? (
     <div className="w-full light-orange-background p-2 flex justify-between items-center">
-      <NavLink to="/">Home</NavLink>
+      <NavLink to="/home">Home</NavLink>
       <NavLink to="/nearUsers">Near Users</NavLink>
       <NavLink to="/chat">Chat</NavLink>
       <div

@@ -29,7 +29,6 @@ export const Feed = () => {
     }, [])
     return (
         <div>
-            <Navbar currentPath="Home"></Navbar>
             <div className="pt-20 bg-gray-100">
             <div className="bg-white mx-64 my-4 border rounded-lg">
                 <form onSubmit={(e) => submitPost(e)}>
