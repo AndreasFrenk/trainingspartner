@@ -101,7 +101,7 @@ async function findNearBy(id: String) {
     const user = await User.findById(id);
     const userLocation = user?.profile.location.loc.coordinates;
     const nearByUsers = await User.find({
-        "profile.location.loc": { $nearSphere: { $geometry: { type: "Point", coordinates: userLocation }, $maxDistance: 50000 }  },
+        "profile.location.loc": { $nearSphere: { $geometry: { type: "Point", coordinates: userLocation }, $maxDistance: 50000000000 }  },
         _id: { $ne: id }
     });
     
