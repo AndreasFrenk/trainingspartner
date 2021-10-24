@@ -29,12 +29,12 @@ function App() {
             <ProtectedRoute path="/profile/:userid" exact component={OtherProfile} />
             <ProtectedRoute path="/nearUsers" exact component={NearUsers} />
             <ProtectedRoute path="/chat" exact component={Chat} />
-            <ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
-            <ProtectedRoute path="/feed" exact component={Feed} />
+            <ProtectedRoute path="/home" exact component={Feed}></ProtectedRoute>
           </Switch>
       </Router>
     </BrowserRouter>
   );
 }
 
+           //<ProtectedRoute path="/home" exact component={Home}></ProtectedRoute>
 export default App;

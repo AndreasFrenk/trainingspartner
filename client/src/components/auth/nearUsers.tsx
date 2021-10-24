@@ -47,6 +47,8 @@ export const NearUsers: React.FC<props> = ({history}) => {
 
   return nearUsers.user ? (
     <div>
+      <div className="pt-20">
+
       <h1 className="text-gray-700 text-2xl px-4 py-5">Nearby Users</h1>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 py-2 px-8">
         {nearUsers.user.map((user: any, index: number) => (
@@ -81,8 +83,12 @@ export const NearUsers: React.FC<props> = ({history}) => {
           </div>
         ))}
       </div>
+      </div>
     </div>
   ) : (
-    <div>Loading</div>
+<div>
+
+<div>Loading</div>
+</div>
   );
 };

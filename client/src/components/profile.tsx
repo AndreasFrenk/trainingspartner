@@ -24,6 +24,7 @@ export const Profile: React.FC<props> = ({history}) => {
 
   return user ? (
     <div>
+    <div>
       <div
         className="w-full mb-6 background"
         style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -55,6 +56,7 @@ export const Profile: React.FC<props> = ({history}) => {
             <div className="mt-2 text-lg font-bold">Age</div>
             <div className="mt-2">{user?.profile?.age}</div>
           </div>
+        </div>
         </div>
       </div>
       <div className="profile__interests">
