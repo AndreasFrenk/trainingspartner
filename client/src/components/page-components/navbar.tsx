@@ -7,15 +7,15 @@ import placeHolderImage from "../../assets/placeholder_profile.jpeg";
 import "../../styles/navbar.scss";
 export const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.users?.user);
-
+  // const user = useSelector((state: any) => state.users?.user);
+  const user = userService.getStoredUser();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const dropdownMenu = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const userid = userService.getStoredUserId();
-    dispatch(userActions.getById(userid));
-  }, []);
+  // useEffect(() => {
+  //   const userid = userService.getStoredUserId();
+  //   dispatch(userActions.getById(userid));
+  // }, []);
 
   const logout = () => {
     dispatch(userActions.logout());

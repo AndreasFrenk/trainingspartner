@@ -5,23 +5,44 @@ import { userActions } from "../actions/users";
 import { userService } from "../services/userService";
 import placeHolderImage from "../assets/placeholder_profile.jpeg";
 import "../styles/utils.scss";
+import axios from "axios";
 
 interface props extends RouteComponentProps {}
 
 export const EditProfile: React.FC<props> = ({ history }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.users?.user);
+  // const user = useSelector((state: any) => state.users?.user);
+  const user = userService.getStoredUser();
   const [editUser, setEditUser] = useState<any>(user?.profile);
   const [fileSelected, setFileSelected] = React.useState<Blob>();
   const [imageChanged, setImageChanged] = React.useState<boolean>();
   const [image, setImage] = React.useState<string>();
-  useEffect(() => {
-    const userid = userService.getStoredUserId();
-    dispatch(userActions.getById(userid));
-  }, []);
+  const [submit, setSubmit] = React.useState<boolean>(false);
+  // useEffect(() => {
+  //   const userid = userService.getStoredUserId();
+  //   dispatch(userActions.getById(userid));
+  // }, []);
   useEffect(() => {
     setEditUser(user);
   }, [user]);
+
+  useEffect(() => {
+    if (submit) {
+      sendUpdateUser();
+    }
+  }, [editUser]);
+
+  const sendUpdateUser = () => {
+    if (imageChanged) {
+      uploadImage();
+    }
+    dispatch(userActions.updateUser(editUser));
+    //hacky stuff going on here, should implement some dispatch thunk stuff
+    //to wait for dispatch to finish
+    setTimeout(() => {
+      history.push("/profile");
+    }, 2000);
+  };
 
   const handleChange = (e: Event, profile: boolean, location?: boolean) => {
     e.preventDefault();
@@ -47,17 +68,76 @@ export const EditProfile: React.FC<props> = ({ history }) => {
       return newUser;
     });
   };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    dispatch(userActions.updateUser(editUser));
-    if (imageChanged) {
-      uploadImage();
+
+  const checkCity = () =>
+    new Promise((resolve, reject) => {
+      const city = editUser?.profile?.location?.city;
+      if (!city) {
+        resolve(true);
+        return;
+      }
+      axios
+        .get(
+          `http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${city}`
+        )
+        .then((response) => {
+          if (!response) {
+            reject("city not found");
+            return;
+          }
+          const allData = response.data?.data;
+          let dataInfo: any;
+          allData.forEach((item: any) => {
+            if (item?.city === city) {
+              dataInfo = item;
+            }
+          });
+          if (!dataInfo) {
+            reject("city not found");
+            return;
+          }
+
+          console.log("true");
+          resolve(dataInfo);
+        });
+    });
+
+  const conditionalChaining = (promiseResult: any) => {
+    if (!promiseResult) {
+      alert("city not found");
+      setSubmit(false);
+      return;
     }
-    //hacky stuff going on here, should implement some dispatch thunk stuff
-    //to wait for dispatch to finish
-    setTimeout(() => {
-      history.push("/profile");
-    }, 2000);
+    if (promiseResult === true) {
+      sendUpdateUser()
+      return;
+    }
+    console.log(promiseResult);
+    setEditUser((previousUser: any) => {
+      let newUser = { ...previousUser };
+      let newProfile = { ...previousUser.profile };
+      let newLocation = { ...previousUser.profile?.location };
+      const loc = {
+        type: "Point",
+        coordinates: [promiseResult.latitude, promiseResult.longitude],
+      };
+      Object.assign(newLocation, { loc: loc, country: promiseResult.country });
+      Object.assign(newProfile, { location: newLocation });
+      Object.assign(newUser, { profile: newProfile });
+      return newUser;
+    });
+  };
+
+  const handleError = (message: string) => {
+    alert(message);
+    setSubmit(false);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    checkCity()
+      .then(conditionalChaining)
+      .catch((error) => handleError(error));
   };
   const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileList = e.target.files;
@@ -228,6 +308,9 @@ export const EditProfile: React.FC<props> = ({ history }) => {
                 type="submit"
                 value="Save"
                 className="p-3 font-bold rounded-lg mt-3 light-orange-background cursor-pointer"
+                onClick={() => {
+                  setSubmit(true);
+                }}
               ></input>
             </div>
           </form>

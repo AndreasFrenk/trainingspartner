@@ -54,7 +54,7 @@ export const NearUsers: React.FC<props> = ({history}) => {
         {nearUsers.user.map((user: any, index: number) => (
           <div
             key={index}
-            className="overflow-hidden shadow-lg transform transition duration-500 hover:scale-110"
+            className="overflow-hidden shadow-lg transform transition duration-500 hover:scale-110 cursor-pointer"
             onClick={() => {history.push(`/profile/${user?._id}`)}}
           >
             <img

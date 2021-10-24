@@ -194,7 +194,7 @@ const Chat: React.FC = () => {
 
   const sendMessage = () => {
     if (!messageReciever) {
-      alert("Message could not be sent");
+      alert("Message could not be sent. Please select a user.");
       return;
     }
     if (message.length === 0) return;
@@ -294,7 +294,7 @@ const Chat: React.FC = () => {
             <div className="font-bold m-auto">{messageReciever?.username}</div>
           </div>
         ) : null}
-        <div className="message-container h-full">
+        <div className="message-container h-full pt-2">
           {allMessages && allMessages.length > 0
             ? allMessages[
                 allMessages.findIndex(

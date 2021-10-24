@@ -49,6 +49,12 @@ const getUserProfileImg = () => {
   return "";
 };
 
+const getStoredUser = () => {
+  let user = JSON.parse(localStorage.getItem("user")!);
+  if (!user) return "" 
+  return user
+};
+
 const getStoredUserName = () => {
   let user = JSON.parse(localStorage.getItem("user")!);
   if (user?.username) {
@@ -194,6 +200,7 @@ export const userService = {
   getStoredUserName,
   getStoredUserId,
   getUserProfileImg,
+  getStoredUser,
   updateImage,
   getNearUsers,
   updateProfile,
