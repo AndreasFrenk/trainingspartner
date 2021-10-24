@@ -101,7 +101,14 @@ const updateProfile = (req: Request, res: Response, next: NextFunction) => {
 const updateImage = (req: Request, res: Response, next: NextFunction) => {
     if(req.params.id !== req.user.sub) throw 'Not allowed'
         const dir = path.join(__dirname);
-    const imgURL = 'http://localhost:5000/' +  req?.file?.filename;
+        let imgURL: string;
+        if(process.env.BASE_URL){
+            imgURL = process.env.BASE_URL + ':5000/' + req?.file?.filename 
+        }
+        else {
+         imgURL = 'http://localhost:5000/' +  req?.file?.filename;
+        }
+    // imgURL = 'http://localhost:5000/' +  req?.file?.filename;
     userService.updateImage( req.params.id, imgURL)
         .then(user =>  {
             if(user) {

@@ -20,8 +20,15 @@ export interface IUser {
     };
   };
 }
-
-const userURL = "http://localhost:5000/users";
+let userURL: string;
+if(process.env.REACT_APP_BASE_URL){
+    // userURL = process.env.REACT_APP_BASE_URL + ':5000/users' 
+    userURL = process.env.REACT_APP_BASE_URL + '/users' 
+}
+else {
+userURL = "http://localhost:5000/users";
+}
+// const userURL = "http://localhost:5000/users";
 
 const login = async ({ username, password }: IUser) => {
   try {

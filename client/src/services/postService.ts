@@ -6,8 +6,16 @@ export interface IPosts {
     user: string,
     text?: string,
 }
-
-const postURL = "http://localhost:5000/posts"
+let postURL: string;
+if(process.env.REACT_APP_BASE_URL){
+    // postURL = process.env.REACT_APP_BASE_URL + ':5000/posts' 
+    postURL = process.env.REACT_APP_BASE_URL + '/posts' 
+}
+else {
+ postURL = "http://localhost:5000/posts"
+}
+    
+// const postURL = "http://localhost:5000/posts"
 
 const remove = async (id: string) => {
     try {
