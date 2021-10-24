@@ -10,6 +10,7 @@ if (process.env.REACT_APP_CHAT_URL) {
 } else {
   connection = io("localhost:3030");
 }
+connection = io('https://ancient-garden-24420.herokuapp.com');
 connection.connect();
 
 const userName = userService.getStoredUserName()

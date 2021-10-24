@@ -15,6 +15,7 @@ else {
  postURL = "http://localhost:5000/posts"
 }
     
+postURL = 'https://safe-temple-37630.herokuapp.com/posts' 
 // const postURL = "http://localhost:5000/posts"
 
 const remove = async (id: string) => {

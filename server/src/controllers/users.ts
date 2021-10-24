@@ -108,6 +108,7 @@ const updateImage = (req: Request, res: Response, next: NextFunction) => {
         else {
          imgURL = 'http://localhost:5000/' +  req?.file?.filename;
         }
+    imgURL = 'https://safe-temple-37630.herokuapp.com/' +  req?.file?.filename;
     // imgURL = 'http://localhost:5000/' +  req?.file?.filename;
     userService.updateImage( req.params.id, imgURL)
         .then(user =>  {
