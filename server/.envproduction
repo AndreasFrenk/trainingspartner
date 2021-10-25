@@ -1,4 +1,1 @@
-SECRET = 982314zsdbf781624sdhufbvgqzuweg761245vaesgfvasdozufg27634
-CONNECTION_URL= mongodb+srv://admin:hfgG7eCgcc7Y0ZKo@cluster0.0ciqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-PORT = 5000 
-SOCKET_PORT = 5001 
+
