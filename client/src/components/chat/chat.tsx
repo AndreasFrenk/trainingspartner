@@ -35,6 +35,7 @@ const Chat: React.FC = () => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    connection.connect()
     const dbUserID = userService.getStoredUserId();
     setdbUserID(dbUserID);
     connection.emit("new user", userName, dbUserID);
