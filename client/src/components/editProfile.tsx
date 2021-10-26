@@ -12,8 +12,9 @@ interface props extends RouteComponentProps {}
 export const EditProfile: React.FC<props> = ({ history }) => {
   const dispatch = useDispatch();
   // const user = useSelector((state: any) => state.users?.user);
-  const user = userService.getStoredUser();
-  const [editUser, setEditUser] = useState<any>(user?.profile);
+  // const user = userService.getStoredUser();
+  const [editUser, setEditUser] = useState<any>();
+  // const [editUser, setEditUser] = useState<any>(user?.profile);
   const [fileSelected, setFileSelected] = React.useState<Blob>();
   const [imageChanged, setImageChanged] = React.useState<boolean>();
   const [image, setImage] = React.useState<string>();
@@ -23,10 +24,12 @@ export const EditProfile: React.FC<props> = ({ history }) => {
   //   dispatch(userActions.getById(userid));
   // }, []);
   useEffect(() => {
+    const user = userService.getStoredUser();
     setEditUser(user);
-  }, [user]);
+  }, []);
 
   useEffect(() => {
+    console.log('called1')
     if (submit) {
       sendUpdateUser();
     }
@@ -158,6 +161,7 @@ export const EditProfile: React.FC<props> = ({ history }) => {
   const uploadImage = () => {
     const profileImage = new FormData();
     profileImage.append("file", fileSelected as Blob);
+    console.log(fileSelected)
     dispatch(userActions.updateImage(profileImage));
   };
 

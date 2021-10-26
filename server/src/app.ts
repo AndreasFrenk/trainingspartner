@@ -37,92 +37,92 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket: any) => {
-  const users = [] as any;
-  socket.on("new user", (username: string, dbUserID: string) => {
-    socket.username = username;
-    socket.dbUserID = dbUserID;
-  io.of("/").sockets.forEach((entry: any) => {
-    const index = users.findIndex((user: any) => user.userID === entry.id)
-    if (!!entry.username && index === -1 && !!entry.dbUserID) {
-      users.push({
-        userID: entry.id,
-        username: entry.username,
-        dbUserID: entry.dbUserID,
-      });
-    }
-  });
-  socket.broadcast.emit("users", users);
-  });
-  io.of("/").sockets.forEach((entry: any) => {
-    const index = users.findIndex((user: any) => user.dbUserID === entry.dbUserID)
-    if (!!entry.username && index === -1 && entry.id !== socket.id && !!entry.dbUserID) {
-      users.push({
-        userID: entry.id,
-        username: entry.username,
-        dbUserID: entry.dbUserID,
-      });
-    }
-    if (!!entry.username && index > -1 && !!entry.dbUserID) {
-      users[index] = {
-        userID: entry.id,
-        username: entry.username,
-        dbUserID: entry.dbUserID,
-      }
-    }
-  });
-  console.log('users: ')
-  socket.emit("users", users);
+// io.on("connection", (socket: any) => {
+//   const users = [] as any;
+//   socket.on("new user", (username: string, dbUserID: string) => {
+//     socket.username = username;
+//     socket.dbUserID = dbUserID;
+//   io.of("/").sockets.forEach((entry: any) => {
+//     const index = users.findIndex((user: any) => user.userID === entry.id)
+//     if (!!entry.username && index === -1 && !!entry.dbUserID) {
+//       users.push({
+//         userID: entry.id,
+//         username: entry.username,
+//         dbUserID: entry.dbUserID,
+//       });
+//     }
+//   });
+//   socket.broadcast.emit("users", users);
+//   });
+//   io.of("/").sockets.forEach((entry: any) => {
+//     const index = users.findIndex((user: any) => user.dbUserID === entry.dbUserID)
+//     if (!!entry.username && index === -1 && entry.id !== socket.id && !!entry.dbUserID) {
+//       users.push({
+//         userID: entry.id,
+//         username: entry.username,
+//         dbUserID: entry.dbUserID,
+//       });
+//     }
+//     if (!!entry.username && index > -1 && !!entry.dbUserID) {
+//       users[index] = {
+//         userID: entry.id,
+//         username: entry.username,
+//         dbUserID: entry.dbUserID,
+//       }
+//     }
+//   });
+//   console.log('users: ')
+//   socket.emit("users", users);
 
-  socket.on(
-    "private message",
-    ({ username, receiver, msg, sender, chat }: {  username: string; receiver: string; msg: string, sender: string, chat: string}) => {
-      io.of("/").sockets.forEach((entry: any) => {
-        const index = users.findIndex((user: any) => user.userID === entry.id)
-        if (!!entry.username && index === -1 && !!entry.dbUserID) {
-          users.push({
-            userID: entry.id,
-            username: entry.username,
-            dbUserID: entry.dbUserID,
-          });
-        }
-      })
-      socket.to(receiver).emit("private message", {
-        username: username,
-        message: msg,
-        receiver: receiver, 
-        sender: sender,
-        chat: socket.dbUserID
-      });
-      console.log('socket.id: ' + socket.id)
+//   socket.on(
+//     "private message",
+//     ({ username, receiver, msg, sender, chat }: {  username: string; receiver: string; msg: string, sender: string, chat: string}) => {
+//       io.of("/").sockets.forEach((entry: any) => {
+//         const index = users.findIndex((user: any) => user.userID === entry.id)
+//         if (!!entry.username && index === -1 && !!entry.dbUserID) {
+//           users.push({
+//             userID: entry.id,
+//             username: entry.username,
+//             dbUserID: entry.dbUserID,
+//           });
+//         }
+//       })
+//       socket.to(receiver).emit("private message", {
+//         username: username,
+//         message: msg,
+//         receiver: receiver, 
+//         sender: sender,
+//         chat: socket.dbUserID
+//       });
+//       console.log('socket.id: ' + socket.id)
 
-      socket.emit("private message sent", {
-        username: username,
-        message: msg,
-        sender: sender,
-        chat: chat,
-        receiver: receiver 
-      });
-    }
-  );
+//       socket.emit("private message sent", {
+//         username: username,
+//         message: msg,
+//         sender: sender,
+//         chat: chat,
+//         receiver: receiver 
+//       });
+//     }
+//   );
 
-  socket.on(
-    "chat message",
-    ({username, msg, sender, receiver, chat}: {username: string, msg: string; sender: string; receiver: string, chat: string}) => {
-      io.emit("chat message", {username: username, sender: sender, message: msg, receiver: receiver, chat: chat});
-    }
-  );
+//   socket.on(
+//     "chat message",
+//     ({username, msg, sender, receiver, chat}: {username: string, msg: string; sender: string; receiver: string, chat: string}) => {
+//       io.emit("chat message", {username: username, sender: sender, message: msg, receiver: receiver, chat: chat});
+//     }
+//   );
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+// });
 
 const chat = io.of("/chat");
 
-server.listen(3030, () => {
-  console.log("chat listening: 3030");
-});
+// server.listen(3030, () => {
+//   console.log("chat listening: 3030");
+// });
 
 const CONNECTION_URL = process.env.CONNECTION_URL!;
 const PORT = process.env.PORT!;

@@ -38,9 +38,12 @@ const Chat: React.FC = () => {
     const dbUserID = userService.getStoredUserId();
     setdbUserID(dbUserID);
     connection.emit("new user", userName, dbUserID);
+    console.log('emitted')
   }, []);
   useEffect(() => {
+    connection.connect();
     connection.on("user connected", (user) => {
+      console.log(user)
       setAllUsers((prevUsers: user[]) => {
         const users = [...prevUsers];
         const index = users.findIndex(
@@ -186,6 +189,20 @@ const Chat: React.FC = () => {
         });
       }
     );
+
+    connection.on("user disconnected", (user) => {
+      setAllUsers((prevUsers: user[]) => {
+        const users = [...prevUsers];
+        const index = users.findIndex(
+          (entry) => entry?.userID === user?.userID
+        );
+        if (index === -1) {
+        return users;
+        }
+        users.splice(index);
+        return users;
+      });
+    });
 
     return () => {
       connection.disconnect();
