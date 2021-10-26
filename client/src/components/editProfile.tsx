@@ -80,7 +80,8 @@ export const EditProfile: React.FC<props> = ({ history }) => {
       }
       axios
         .get(
-          `http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${city}`
+          `https://geocode.xyz/${city}?json=1`
+          // `http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${city}`
         )
         .then((response) => {
           if (!response) {
@@ -119,7 +120,8 @@ export const EditProfile: React.FC<props> = ({ history }) => {
       let newLocation = { ...previousUser.profile?.location };
       const loc = {
         type: "Point",
-        coordinates: [promiseResult.latitude, promiseResult.longitude],
+        // coordinates: [promiseResult.latitude, promiseResult.longitude],
+        coordinates: [promiseResult.latt, promiseResult.long],
       };
       Object.assign(newLocation, { loc: loc, country: promiseResult.country });
       Object.assign(newProfile, { location: newLocation });
