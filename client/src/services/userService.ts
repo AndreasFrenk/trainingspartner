@@ -138,7 +138,6 @@ const updateImage = async (image: FormData) => {
     if (data !== 404) {
     const storedUser = localStorage.getItem("user") as string;
     const updatedUser = Object.assign(JSON.parse(storedUser), data)
-    console.log(updatedUser)
     localStorage.setItem("user", JSON.stringify(updatedUser));
     }
     return data;
@@ -177,7 +176,6 @@ const updateUser = async (profile: IUser) => {
     if (data !== 404) {
     const storedUser = localStorage.getItem("user") as string;
     const updatedUser = Object.assign(JSON.parse(storedUser), data)
-    console.log(updatedUser)
     localStorage.setItem("user", JSON.stringify(updatedUser));
     }
     return data;

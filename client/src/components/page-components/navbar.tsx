@@ -23,7 +23,6 @@ export const Navbar = () => {
   const handleClickOutside = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    console.log("handleClickOutside");
     if (!dropdownMenu.current?.contains(e.target as Node)) {
       setOpenMenu(false);
     }

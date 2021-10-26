@@ -38,12 +38,9 @@ const Chat: React.FC = () => {
     const dbUserID = userService.getStoredUserId();
     setdbUserID(dbUserID);
     connection.emit("new user", userName, dbUserID);
-    console.log('emitted')
   }, []);
   useEffect(() => {
-    connection.connect();
     connection.on("user connected", (user) => {
-      console.log(user)
       setAllUsers((prevUsers: user[]) => {
         const users = [...prevUsers];
         const index = users.findIndex(
@@ -139,9 +136,7 @@ const Chat: React.FC = () => {
         receiver: string;
         chat: string;
       }) => {
-        console.log("receiver: " + receiver);
-        console.log("dbUserID: " + dbUserID);
-        console.log(allUsers);
+
 
         handleMessages({
           username: username,

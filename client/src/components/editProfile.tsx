@@ -29,7 +29,6 @@ export const EditProfile: React.FC<props> = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    console.log('called1')
     if (submit) {
       sendUpdateUser();
     }
@@ -100,7 +99,6 @@ export const EditProfile: React.FC<props> = ({ history }) => {
             return;
           }
 
-          console.log("true");
           resolve(dataInfo);
         });
     });
@@ -115,7 +113,6 @@ export const EditProfile: React.FC<props> = ({ history }) => {
       sendUpdateUser()
       return;
     }
-    console.log(promiseResult);
     setEditUser((previousUser: any) => {
       let newUser = { ...previousUser };
       let newProfile = { ...previousUser.profile };
@@ -159,10 +156,10 @@ export const EditProfile: React.FC<props> = ({ history }) => {
   };
 
   const uploadImage = () => {
-    const profileImage = new FormData();
-    profileImage.append("file", fileSelected as Blob);
-    console.log(fileSelected)
-    dispatch(userActions.updateImage(profileImage));
+    alert("Unfortunately the image upload is only locally avaible. We haven't configured an image hosting yet. Thank you for trying though :)! ")
+    // const profileImage = new FormData();
+    // profileImage.append("file", fileSelected as Blob);
+    // dispatch(userActions.updateImage(profileImage));
   };
 
   return editUser ? (

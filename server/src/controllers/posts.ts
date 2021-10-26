@@ -32,8 +32,6 @@ const comment = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const update = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.user)
-    console.log(req.user.sub)
     if(req.body.user !== req.user.sub) throw 'Not allowed'
     postsService.update(req.params.id, req.body)
         .then(() => res.status(200).json({}))

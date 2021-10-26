@@ -83,7 +83,6 @@ export const getById = (id: string) => async (dispatch: any) => {
     userService.getById(id)
     .then(
         user => {
-            console.log(user)
             dispatch({type: 'GET_BYID_SUCCESS', user})
             //Push history
         },

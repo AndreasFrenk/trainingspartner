@@ -6,10 +6,8 @@ import { IUser } from '../services/userService'
 //action creators
 export const getAll = () => async (dispatch: any) => {
     dispatch({type: 'GETALL_POSTS_REQUEST'})
-    console.log('getting posts')
     postService.getAll().then(
         posts => {
-            console.log(posts)
             dispatch({type: 'GETALL_POSTS_SUCCESS', posts})
         },
         error => {

@@ -19,7 +19,6 @@ const folderName = "public";
 app.use(express.static(__dirname + "/../" + folderName));
 
 const folder = path.join(__dirname + "/../" + folderName);
-console.log("folder: " + folder);
 app.use(jwt());
 
 //Routes
