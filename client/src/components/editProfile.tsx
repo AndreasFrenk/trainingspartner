@@ -96,7 +96,7 @@ export const EditProfile: React.FC<props> = ({ history }) => {
           //   }
           // });
           const dataInfo = response?.data
-          if (!dataInfo) {
+          if (!dataInfo?.city) {
             reject("city not found");
             return;
           }
