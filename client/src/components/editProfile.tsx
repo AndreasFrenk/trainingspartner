@@ -88,13 +88,14 @@ export const EditProfile: React.FC<props> = ({ history }) => {
             reject("city not found");
             return;
           }
-          const allData = response.data?.data;
-          let dataInfo: any;
-          allData.forEach((item: any) => {
-            if (item?.city === city) {
-              dataInfo = item;
-            }
-          });
+          // const allData = response.data?.data;
+          // let dataInfo: any;
+          // allData.forEach((item: any) => {
+          //   if (item?.city === city) {
+          //     dataInfo = item;
+          //   }
+          // });
+          const dataInfo = response?.data
           if (!dataInfo) {
             reject("city not found");
             return;
@@ -121,7 +122,7 @@ export const EditProfile: React.FC<props> = ({ history }) => {
       const loc = {
         type: "Point",
         // coordinates: [promiseResult.latitude, promiseResult.longitude],
-        coordinates: [promiseResult.latt, promiseResult.long],
+        coordinates: [promiseResult.latt, promiseResult.longt],
       };
       Object.assign(newLocation, { loc: loc, country: promiseResult.country });
       Object.assign(newProfile, { location: newLocation });
