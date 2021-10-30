@@ -40,7 +40,7 @@ function FeedPostCard(props: any) {
   };
   useEffect(() => {}, []);
   return (
-    <div className="bg-white mx-64 my-5 border-2 border-gray-50 rounded-lg">
+    <div className="bg-white md:mx-64 my-5 border-2 border-gray-50 rounded-lg">
       <div className="px-3 py-1">
         <span className="text-xl">{props.post.userProfile[0].username}, </span>
         <span>{props.post.userProfile[0].profile.location.city}</span>

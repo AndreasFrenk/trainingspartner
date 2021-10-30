@@ -30,7 +30,7 @@ export const Feed = () => {
     return (
         <div>
             <div className="pt-20 bg-gray-100">
-            <div className="bg-white mx-64 my-4 border rounded-lg">
+            <div className="bg-white md:mx-64 my-4 border rounded-lg">
                 <form onSubmit={(e) => submitPost(e)}>
 
                 <input className="p-1 rounded-lg w-full" type="text" placeholder="Post something here..." value={postMessage} onChange={(e)=>changePostMessage(e)}></input>

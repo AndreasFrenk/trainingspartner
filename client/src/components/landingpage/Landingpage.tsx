@@ -48,7 +48,7 @@ const Landingpage: React.FC<Props> = ({history})=>{
         </div>
        <div className="big-banner h-screen w-full bg-cover" style={{backgroundImage: `url(${backgroundImage})`,}}>
 
-        <div className="grid grid-cols-2 mx-20 gap-4 text-secondary pt-80">
+        <div className="grid sm:grid-cols-2 mx-20 gap-4 text-secondary pt-80">
             <div></div>
          <div className="bg-primary text-lg rounded-md bg-opacity-75 p-3">
              <p >Du suchst einen Trainingspartner? Dann bist du hier genau richtig! Finde einen Partner für dein nächstes Workout. 
